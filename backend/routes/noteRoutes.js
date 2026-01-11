@@ -1,19 +1,24 @@
 const express = require("express");
 const router = express.Router();
+const submissionController = require("../controllers/submissionController");
+
+// Import Controller & Middleware
 const noteController = require("../controllers/noteController");
-
 const authController = require("../controllers/authController");
-const authMiddleware = require("../middleware/authMiddleware"); // Kita buat ini di bawah
+const authMiddleware = require("../middleware/authMiddleware");
 
-// Public Routes (Untuk Mahasiswa)
-router.get("/:id", noteController.getNote);
-
-// Auth Routes
+// === RUTE PUBLIC (Siapapun bisa akses) ===
 router.post("/register", authController.register);
 router.post("/login", authController.login);
+router.get("/:id", noteController.getNote); // Mahasiswa buka soal
+router.post("/submit", submissionController.submitExam);
 
-// Private Routes (Untuk Dosen - Perlu Token)
+// === RUTE PRIVATE (Hanya Dosen Login) ===
+// Perhatikan: ada authMiddleware diselipkan di tengah
+router.get("/submissions/:noteId", authMiddleware, submissionController.getSubmissionsByNote);
+router.put("/submission/:id", authMiddleware, submissionController.gradeSubmission);
 router.post("/", authMiddleware, noteController.createNote);
 router.get("/my/all", authMiddleware, noteController.getMyNotes);
+router.delete("/:id", authMiddleware, noteController.deleteNote);
 
 module.exports = router;

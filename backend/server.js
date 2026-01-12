@@ -1,30 +1,18 @@
+import cors from "cors";
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const noteRoutes = require("./routes/noteRoutes");
-const mysql = require("mysql2");
 
 const app = express();
 
-//koneksi db
-const db = mysql.createPool({
-  host: process.env.MYSQLHOST,
-  user: process.env.MYSQLUSER,
-  password: process.env.MYSQLPASSWORD,
-  database: process.env.MYSQLDATABASE,
-  port: process.env.MYSQLPORT,
-});
-
-db.getConnection((err) => {
-  if (err) {
-    console.error("❌ MySQL Connection Error:", err);
-  } else {
-    console.log("✅ MySQL Railway Connected");
-  }
-});
-
 // Middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Routing
@@ -36,8 +24,9 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5001;
 
-const server = app.listen(PORT, () => {
-  console.log(`✅ Server berjalan di ${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  // '0.0.0.0' penting untuk cloud hosting
+  console.log(`Server running on port ${PORT}`);
 });
 
 // Penanganan Error agar server tidak langsung mati tanpa pesan

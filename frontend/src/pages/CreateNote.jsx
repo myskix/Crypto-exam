@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useCryptography } from "../hooks/useCryptography";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../utils/api";
 
 const CreateNote = () => {
   const [title, setTitle] = useState("");
@@ -76,7 +77,7 @@ const CreateNote = () => {
       const contentString = JSON.stringify(questions);
       const ciphertext = await encryptData(contentString, accessCode);
 
-      const res = await fetch("http://localhost:5001/notes", {
+      const res = await fetch(`${API_URL}/notes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

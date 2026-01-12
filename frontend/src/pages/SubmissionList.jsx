@@ -16,7 +16,7 @@ const SubmissionList = () => {
     const token = localStorage.getItem("token");
 
     // Fetch Submissions
-    fetch(`http://localhost:5001/notes/submissions/${id}`, {
+    fetch(`${API_URL}/notes/submissions${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -24,7 +24,7 @@ const SubmissionList = () => {
       .catch((err) => console.error(err));
 
     // Fetch Detail Ujian (Untuk ambil Judul)
-    fetch(`http://localhost:5001/notes/${id}`) // Kita pakai endpoint public getNote
+    fetch(`${API_URL}/notes/${id}`) // Kita pakai endpoint public getNote
       .then((res) => res.json())
       .then((data) => setExamTitle(data.title))
       .catch(() => setExamTitle("Ujian Tanpa Judul"));
@@ -41,7 +41,7 @@ const SubmissionList = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`http://localhost:5001/notes/submission/${selectedStudent.id}`, {
+      const res = await fetch(`${API_URL}/notes/submission${selectedStudent.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import API_URL from "../utils/api";
 
 const Dashboard = () => {
   const [notes, setNotes] = useState([]);
@@ -12,7 +13,7 @@ const Dashboard = () => {
     const token = localStorage.getItem("token");
     if (!token) return navigate("/login");
 
-    fetch("http://localhost:5001/notes/my/all", {
+    fetch(`${API_URL}/notes/my/all`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -30,7 +31,7 @@ const Dashboard = () => {
 
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch(`http://localhost:5001/notes/${id}`, {
+      const res = await fetch(`${API_URL}/notes/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

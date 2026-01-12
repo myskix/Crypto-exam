@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5001"; // Sesuaikan dengan port backend kamu
+const API_URL = import.meta.env.VITE_API_URL; // Sesuaikan dengan port backend kamu
 
 export const saveNote = async (data) => {
   const response = await fetch(`${API_URL}/notes`, {
@@ -14,3 +14,5 @@ export const getNoteById = async (id) => {
   if (!response.ok) throw new Error("Gagal mengambil data atau link kadaluwarsa");
   return response.json();
 };
+
+export default API_URL;

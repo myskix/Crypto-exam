@@ -1,6 +1,5 @@
 import cors from "cors";
 const express = require("express");
-const cors = require("cors");
 require("dotenv").config();
 const noteRoutes = require("./routes/noteRoutes");
 

@@ -1,4 +1,4 @@
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001"; // Sesuaikan dengan port backend kamu
+export const API_URL = "https://crypto-exam-production.up.railway.app";
 
 export const saveNote = async (data) => {
   const response = await fetch(`${API_URL}/notes`, {

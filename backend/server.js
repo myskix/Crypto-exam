@@ -1,8 +1,11 @@
+import express from "express";
 import cors from "cors";
-const express = require("express");
-require("dotenv").config();
-const noteRoutes = require("./routes/noteRoutes");
+import dotenv from "dotenv";
+import mysql from "mysql2";
+import noteRoutes from "./routes/noteRoutes.js";
 
+// const noteRoutes = require("./routes/noteRoutes");
+dotenv.config();
 const app = express();
 
 // Middleware

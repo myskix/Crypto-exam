@@ -1,11 +1,11 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const submissionController = require("../controllers/submissionController");
 
-// Import Controller & Middleware
-const noteController = require("../controllers/noteController");
-const authController = require("../controllers/authController");
-const authMiddleware = require("../middleware/authMiddleware");
+// Import Controller & Middleware (Pastikan pakai akhiran .js)
+import * as submissionController from "../controllers/submissionController.js";
+import * as noteController from "../controllers/noteController.js";
+import * as authController from "../controllers/authController.js";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 // === RUTE PUBLIC (Siapapun bisa akses) ===
 router.post("/register", authController.register);

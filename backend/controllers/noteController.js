@@ -1,5 +1,5 @@
-const db = require("../config/db");
-const crypto = require("crypto");
+import db from "../config/db.js";
+import crypto from "crypto";
 
 // 1. Simpan Soal (Update: Terima Title)
 exports.createNote = async (req, res) => {

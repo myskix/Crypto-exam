@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useCryptography } from "../hooks/useCryptography";
 import { getNoteById } from "../utils/api";
 import Countdown from "../components/Countdown";
+import { API_URL } from "../utils/api";
 
 const ViewNote = () => {
   const { id } = useParams();

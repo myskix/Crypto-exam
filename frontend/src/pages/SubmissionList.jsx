@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2"; // Import Alert Cantik
+import { API_URL } from "../utils/api";
 
 const SubmissionList = () => {
   const { id } = useParams();

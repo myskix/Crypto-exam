@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { API_URL } from "../utils/api";
 
 const Register = () => {
   const [form, setForm] = useState({ username: "", password: "" });

@@ -1,14 +1,14 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import mysql from "mysql2";
 import noteRoutes from "./routes/noteRoutes.js";
 
-// const noteRoutes = require("./routes/noteRoutes");
+// Load environment variables
 dotenv.config();
+
 const app = express();
 
-// Middleware
+// 1. Middleware - Penting untuk CORS di Railway
 app.use(
   cors({
     origin: "*",
@@ -17,24 +17,25 @@ app.use(
 );
 app.use(express.json());
 
-// Routing
+// 2. Routing
 app.use("/notes", noteRoutes);
 
+// Health check untuk Railway
 app.get("/", (req, res) => {
   res.send("Server API Kriptografi Aktif!");
 });
 
 const PORT = process.env.PORT || 5001;
 
-app.listen(PORT, "0.0.0.0", () => {
-  // '0.0.0.0' penting untuk cloud hosting
-  console.log(`Server running on port ${PORT}`);
+// 3. FIX: Simpan hasil app.listen ke dalam variabel 'server'
+const server = app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
 
-// Penanganan Error agar server tidak langsung mati tanpa pesan
+// 4. Penanganan Error - Sekarang variabel 'server' sudah didefinisikan
 server.on("error", (err) => {
   if (err.code === "EADDRINUSE") {
-    console.error(`❌ PORT ${PORT} sudah digunakan. Tutup server lain atau ganti port di .env`);
+    console.error(`❌ PORT ${PORT} sudah digunakan.`);
   } else {
     console.error("❌ SERVER ERROR:", err);
   }

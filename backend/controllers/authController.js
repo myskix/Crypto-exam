@@ -35,7 +35,7 @@ export const login = async (req, res) => {
     if (!validPass) return res.status(400).json({ error: "Password salah." });
 
     // Buat Token
-    const token = jwt.sign({ id: rows[0].id, username: rows[0].username }, "RAHASIA_NEGARA", { expiresIn: "24h" });
+    const token = jwt.sign({ id: rows[0].id, username: rows[0].username }, process.env.JWT_SECRET, { expiresIn: "24h" });
 
     res.json({ token, username: rows[0].username });
   } catch (error) {

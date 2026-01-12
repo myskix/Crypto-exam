@@ -5,7 +5,7 @@ const router = express.Router();
 import * as submissionController from "../controllers/submissionController.js";
 import * as noteController from "../controllers/noteController.js";
 import * as authController from "../controllers/authController.js";
-import authMiddleware from "../middleware/authMiddleware.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 
 // === RUTE PUBLIC (Siapapun bisa akses) ===
 router.post("/register", authController.register);

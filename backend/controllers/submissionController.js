@@ -1,6 +1,6 @@
 import db from "../config/db.js";
 
-exports.submitExam = async (req, res) => {
+export const submitExam = async (req, res) => {
   try {
     // 1. Ambil data yang dikirim dari Frontend
     // HAPUS 'submitted_at' dari sini karena database akan mengisinya otomatis
@@ -25,7 +25,7 @@ exports.submitExam = async (req, res) => {
 };
 
 // Fungsi tambahan untuk Dosen melihat hasil (Nanti kita pakai)
-exports.getSubmissionsByNote = async (req, res) => {
+export const getSubmissionsByNote = async (req, res) => {
   try {
     const { noteId } = req.params;
     const [rows] = await db.execute("SELECT * FROM submissions WHERE note_id = ? ORDER BY submitted_at DESC", [noteId]);
@@ -35,7 +35,7 @@ exports.getSubmissionsByNote = async (req, res) => {
   }
 };
 
-exports.gradeSubmission = async (req, res) => {
+export const gradeSubmission = async (req, res) => {
   try {
     const { id } = req.params; // ID Submission
     const { score } = req.body; // Nilai baru dari Dosen

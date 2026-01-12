@@ -2,8 +2,26 @@ const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
 const noteRoutes = require("./routes/noteRoutes");
+const mysql = require("mysql2");
 
 const app = express();
+
+//koneksi db
+const db = mysql.createPool({
+  host: process.env.MYSQLHOST,
+  user: process.env.MYSQLUSER,
+  password: process.env.MYSQLPASSWORD,
+  database: process.env.MYSQLDATABASE,
+  port: process.env.MYSQLPORT,
+});
+
+db.getConnection((err) => {
+  if (err) {
+    console.error("❌ MySQL Connection Error:", err);
+  } else {
+    console.log("✅ MySQL Railway Connected");
+  }
+});
 
 // Middleware
 app.use(cors());
@@ -18,10 +36,8 @@ app.get("/", (req, res) => {
 
 const PORT = process.env.PORT || 5001;
 
-// PERBAIKAN: Gunakan 'const server =' agar variabel terdefinisi
 const server = app.listen(PORT, () => {
-  console.log(`✅ Server berjalan di http://localhost:${PORT}`);
-  console.log("Tekan Ctrl+C untuk mematikan server.");
+  console.log(`✅ Server berjalan di ${PORT}`);
 });
 
 // Penanganan Error agar server tidak langsung mati tanpa pesan

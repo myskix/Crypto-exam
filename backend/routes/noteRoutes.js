@@ -21,4 +21,4 @@ router.post("/", authMiddleware, noteController.createNote);
 router.get("/my/all", authMiddleware, noteController.getMyNotes);
 router.delete("/:id", authMiddleware, noteController.deleteNote);
 
-module.exports = router;
+export default authMiddleware;

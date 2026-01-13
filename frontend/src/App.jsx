@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import SubmissionList from "./pages/SubmissionList";
 import LandingPage from "./pages/LandingPage";
-import { API_URL } from "../utils/api";
+import { API_URL } from "./utils/api";
 
 function App() {
   return (

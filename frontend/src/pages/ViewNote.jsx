@@ -80,7 +80,7 @@ const ViewNote = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:5001/notes/submit", {
+      const res = await fetch(`${API_URL}/notes/submit/`, {
         // Perhatikan '/notes/submit'
         method: "POST",
         headers: { "Content-Type": "application/json" },

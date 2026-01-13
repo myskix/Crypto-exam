@@ -77,7 +77,7 @@ const CreateNote = () => {
       const contentString = JSON.stringify(questions);
       const ciphertext = await encryptData(contentString, accessCode);
 
-      const res = await fetch(`${API_URL}/notes`, {
+      const res = await fetch(`${API_URL}/notes/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

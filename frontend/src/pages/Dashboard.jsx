@@ -13,7 +13,7 @@ const Dashboard = () => {
     const token = localStorage.getItem("token");
     if (!token) return navigate("/login");
 
-    fetch(`${API_URL}/notes/my/all`, {
+    fetch(`${API_URL}/notes/my/all/`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
@@ -67,32 +67,81 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f172a] p-6 relative overflow-hidden">
-      {/* Efek Cahaya Latar (Glow) */}
-      <div className="absolute top-0 right-0 w-\[500px] h-\[500px] bg-blue-600/5 blur-[120px] rounded-full -z-0`"></div>
+    <div className="min-h-screen bg-[#0f172a] p-4 md:p-6 relative overflow-hidden">
+      {/* Efek Cahaya Latar (Glow) - Adjusted size for mobile */}
+      <div className="absolute top-0 right-0 w-\[300px] md:w-\[500px] h-\[300px] md:h-\[500px] bg-blue-600/5 blur-[80px] md:blur-[120px] rounded-full -z-0`"></div>
 
       <div className="max-w-5xl mx-auto relative z-10">
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 md:mb-10 gap-6">
           <div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-white tracking-tight">
               Halo, <span className="text-blue-400">{user}</span> 👋
             </h1>
-            <p className="text-slate-400 mt-1">Kelola ujian dan pantau hasil mahasiswa Anda.</p>
+            <p className="text-slate-400 mt-1 text-sm md:text-base">Kelola ujian dan pantau hasil mahasiswa Anda.</p>
           </div>
 
-          <div className="flex gap-3 w-full md:w-auto">
-            <Link to="/create" className="flex-1 md:flex-none bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-blue-900/20 transition-all transform hover:-translate-y-1 text-center">
+          {/* Tombol Action - Full width di mobile */}
+          <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+            <Link
+              to="/create"
+              className="flex-1 md:flex-none bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-blue-900/20 transition-all transform hover:-translate-y-1 text-center text-sm md:text-base"
+            >
               + Buat Ujian Baru
             </Link>
-            <button onClick={handleLogout} className="bg-slate-800 hover:bg-red-500/10 text-red-400 border border-slate-700 px-6 py-3 rounded-2xl font-bold transition-all hover:border-red-500/50">
+            <button onClick={handleLogout} className="flex-1 md:flex-none bg-slate-800 hover:bg-red-500/10 text-red-400 border border-slate-700 px-6 py-3 rounded-2xl font-bold transition-all hover:border-red-500/50 text-sm md:text-base">
               Logout
             </button>
           </div>
         </div>
 
-        {/* TABEL DATA (Dark Glassmorphism) */}
-        <div className="bg-[#1e293b]/50 backdrop-blur-xl rounded-\[2rem] shadow-2xl rounded-2xl overflow-hidden border border-slate-800">
+        {/* === TAMPILAN MOBILE (CARD VIEW) === */}
+        <div className="md:hidden space-y-4">
+          {notes.length > 0 ? (
+            notes.map((note) => (
+              <div key={note.id} className="bg-[#1e293b]/50 backdrop-blur-xl rounded-2xl p-5 border border-slate-800 shadow-lg">
+                {/* Header Kartu */}
+                <div className="flex justify-between items-start mb-4" onClick={() => navigate(`/results/${note.id}`)}>
+                  <div>
+                    <h3 className="text-lg font-bold text-white mb-1">{note.title}</h3>
+                    <span className="bg-slate-900 px-2 py-1 rounded text-[10px] font-mono text-slate-500 border border-slate-700">ID: {note.id.substring(0, 8)}...</span>
+                  </div>
+                  <div className="text-blue-400 text-xl">→</div>
+                </div>
+
+                {/* Info Deadline */}
+                <div className="flex items-center gap-2 text-sm text-slate-400 mb-6 bg-slate-800/50 p-3 rounded-xl">
+                  <span>📅</span>
+                  {new Date(note.deadline).toLocaleString("id-ID", {
+                    day: "numeric",
+                    month: "short",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </div>
+
+                {/* Tombol Aksi Mobile (Full Width) */}
+                <div className="grid grid-cols-2 gap-3">
+                  <button onClick={() => handleCopyLink(note.id)} className="bg-indigo-500/10 text-indigo-400 py-3 rounded-xl text-sm font-bold border border-indigo-500/20 active:bg-indigo-500 active:text-white transition-colors">
+                    🔗 Salin Link
+                  </button>
+                  <button onClick={() => handleDelete(note.id)} className="bg-red-500/10 text-red-400 py-3 rounded-xl text-sm font-bold border border-red-500/20 active:bg-red-500 active:text-white transition-colors">
+                    🗑️ Hapus
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            /* Empty State Mobile */
+            <div className="bg-[#1e293b]/50 p-10 rounded-2xl text-center border border-slate-800">
+              <div className="text-4xl mb-4">📭</div>
+              <p className="text-slate-500 italic">Belum ada ujian.</p>
+            </div>
+          )}
+        </div>
+
+        {/* === TAMPILAN DESKTOP (TABLE VIEW) === */}
+        <div className="hidden md:block bg-[#1e293b]/50 backdrop-blur-xl rounded-2xl shadow-2xl overflow-hidden border border-slate-800">
           <table className="w-full text-left border-collapse">
             <thead className="bg-[#0f172a]/50 text-slate-400 uppercase text-xs tracking-widest font-bold">
               <tr>
@@ -162,8 +211,8 @@ const Dashboard = () => {
         </div>
 
         {/* Info Footer Dashboard */}
-        <div className="mt-8 text-center">
-          <p className="text-slate-600 text-xs tracking-widest uppercase">Sistem Keamanan Terenkripsi AES-256 Aktif</p>
+        <div className="mt-8 text-center pb-6 md:pb-0">
+          <p className="text-slate-600 text-[10px] md:text-xs tracking-widest uppercase">Sistem Keamanan Terenkripsi AES-256 Aktif</p>
         </div>
       </div>
     </div>

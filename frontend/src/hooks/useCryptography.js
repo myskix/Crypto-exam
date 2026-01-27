@@ -1,5 +1,5 @@
 export const useCryptography = () => {
-  // 1. Pembangkitan Kunci dari Access Code (Poin 38)
+  // 1. Pembangkitan Kunci dari Access Code 
   const deriveKey = async (accessCode, salt) => {
     const encoder = new TextEncoder();
     const baseKey = await window.crypto.subtle.importKey("raw", encoder.encode(accessCode), "PBKDF2", false, ["deriveKey"]);
@@ -18,7 +18,7 @@ export const useCryptography = () => {
     );
   };
 
-  // 2. Proses Enkripsi (Poin 39 - Untuk Dosen)
+  // 2. Proses Enkripsi 
   const encryptData = async (plaintext, accessCode) => {
     const encoder = new TextEncoder();
     const salt = window.crypto.getRandomValues(new Uint8Array(16));
@@ -35,7 +35,7 @@ export const useCryptography = () => {
     return btoa(String.fromCharCode(...combined));
   };
 
-  // 3. Proses Dekripsi (Poin 39 - UNTUK MAHASISWA) - TAMBAHKAN INI
+  // 3. Proses Dekripsi
   const decryptData = async (base64Data, accessCode) => {
     try {
       // Ubah kembali Base64 ke Uint8Array secara aman

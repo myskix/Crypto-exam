@@ -37,7 +37,7 @@ const LandingPage = () => {
         {/* Efek Cahaya Latar (Glow) */}
         <div className="absolute top-20 left-1/2 -translate-x-1/2 w-\[500px] h-[300px]\ bg-blue-600/10 blur-[120px] rounded-full -z-10"></div>
 
-        <div className="inline-block px-4 py-1.5 bg-blue-500/10 text-blue-400 rounded-full text-xs font-bold mb-8 border border-blue-500/20">🔒 Secured with AES-256-GCM Encryption</div>
+        <div className="inline-block px-4 py-1.5 bg-blue-500/10 text-blue-400 rounded-full text-xs font-bold mb-8 border border-blue-500/20">🔒 Secured with AES-256-CBC Encryption</div>
 
         <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-8 leading-[1.1]">
           Ujian Online Aman <br />

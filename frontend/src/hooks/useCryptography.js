@@ -3,7 +3,6 @@ export const useCryptography = () => {
   const deriveKey = async (accessCode, salt) => {
     const encoder = new TextEncoder();
     const baseKey = await window.crypto.subtle.importKey("raw", encoder.encode(accessCode), "PBKDF2", false, ["deriveKey"]);
-
     return window.crypto.subtle.deriveKey(
       {
         name: "PBKDF2",

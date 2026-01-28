@@ -8,8 +8,6 @@ export const register = async (req, res) => {
     if (!username || !password) return res.status(400).json({ error: "Data tidak lengkap" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Simpan ke database
     await db.execute("INSERT INTO users (username, password) VALUES (?, ?)", [username, hashedPassword]);
 
     res.status(201).json({ message: "Registrasi berhasil!" });
